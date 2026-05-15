@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sushi Leuven — Moderne & Traditionele Japanse Keuken</title>
+  <meta name="description" content="Sushi Leuven op Tiensestraat 28 — verse sushi, nigiri, maki en special rolls. Dine-in, afhaling & levering. 10% korting online met code SUSHI10." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --white: #ffffff;
+      --off-white: #f8f8f6;
+      --red: #c0392b;
+      --near-black: #1a1a1a;
+      --grey: #6b6b6b;
+      --gold: #c9922a;
+      --footer: #111111;
+      --border: #e8e8e6;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      color: var(--near-black);
+      background: var(--white);
+      line-height: 1.7;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    img { display: block; max-width: 100%; }
+
+    /* ── FADE-UP ANIMATION ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ══════════════════════════════
+       NAVBAR
+    ══════════════════════════════ */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: var(--white);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      height: 64px;
+      display: flex;
+      align-items: center;
+    }
+    #navbar.scrolled {
+      border-color: var(--border);
+      box-shadow: 0 1px 12px rgba(0,0,0,0.06);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .nav-logo .logo-sushi {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--red);
+    }
+    .nav-logo .logo-leuven {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--near-black);
+    }
+    .nav-logo .logo-jp {
+      font-size: 0.9rem;
+      color: var(--red);
+      margin-left: 4px;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--near-black);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--red); }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-shrink: 0;
+    }
+    .lang-toggle {
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--grey);
+      cursor: pointer;
+      user-select: none;
+    }
+    .lang-toggle span {
+      transition: color 0.2s;
+    }
+    .lang-toggle span.active { color: var(--red); font-weight: 700; }
+    .lang-toggle .sep { margin: 0 4px; color: var(--border); }
+    .btn {
+      display: inline-block;
+      padding: 10px 22px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1.5px solid transparent;
+    }
+    .btn-red {
+      background: var(--red);
+      color: var(--white);
+      border-color: var(--red);
+    }
+    .btn-red:hover { background: #a93226; border-color: #a93226; }
+    .btn-outline {
+      background: transparent;
+      color: var(--near-black);
+      border-color: var(--near-black);
+    }
+    .btn-outline:hover { background: var(--near-black); color: var(--white); }
+    .btn-white {
+      background: var(--white);
+      color: var(--red);
+      border-color: var(--white);
+      font-weight: 700;
+    }
+    .btn-white:hover { background: var(--off-white); }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--near-black);
+      transition: all 0.3s;
+    }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px; left: 0; right: 0;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px 24px;
+      z-index: 999;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--near-black);
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+
+    /* ══════════════════════════════
+       HERO
+    ══════════════════════════════ */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      margin-top: 64px;
+    }
+    .hero-left {
+      flex: 0 0 55%;
+      display: flex;
+      align-items: center;
+      padding: 80px 60px 80px 80px;
+      background: var(--white);
+    }
+    .hero-left-inner { max-width: 480px; }
+    .hero-jp {
+      font-size: 1.6rem;
+      margin-bottom: 16px;
+      letter-spacing: 0.1em;
+      color: var(--near-black);
+    }
+    .hero-jp .jp-char { color: var(--red); }
+    .hero-h1 {
+      font-size: clamp(3rem, 5vw, 4.8rem);
+      line-height: 1.0;
+      margin-bottom: 8px;
+    }
+    .hero-h1 .red { color: var(--red); font-style: italic; display: block; }
+    .hero-h1 .dark { color: var(--near-black); font-style: italic; display: block; }
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--grey);
+      font-style: italic;
+      margin-top: 18px;
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+    .hero-promo {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff8f0;
+      border: 1px solid var(--gold);
+      border-radius: 6px;
+      padding: 10px 16px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--near-black);
+      margin-bottom: 28px;
+    }
+    .hero-promo .promo-code {
+      font-weight: 700;
+      color: var(--red);
+      letter-spacing: 0.05em;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+    .hero-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--grey);
+    }
+    .pulse-dot {
+      width: 8px; height: 8px;
+      background: #27ae60;
+      border-radius: 50%;
+      flex-shrink: 0;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.4); }
+    }
+    .hero-right {
+      flex: 0 0 45%;
+      background-image: url('https://images.unsplash.com/photo-1553621042-f6e147245754?w=900');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    .hero-right::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(255,255,255,0.08) 0%, transparent 40%);
+    }
+
+    /* ══════════════════════════════
+       SECTIONS SHARED
+    ══════════════════════════════ */
+    section { padding: 88px 24px; }
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-style: italic;
+      line-height: 1.2;
+      margin-bottom: 48px;
+    }
+
+    /* ══════════════════════════════
+       MENU CATEGORIES
+    ══════════════════════════════ */
+    #menu { background: var(--off-white); }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .menu-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px 16px;
+      text-align: center;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+      cursor: default;
+    }
+    .menu-card:hover {
+      border-color: var(--red);
+      box-shadow: 0 4px 20px rgba(192,57,43,0.08);
+      transform: translateY(-2px);
+    }
+    .menu-card .cat-emoji {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      display: block;
+    }
+    .menu-card .cat-name {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--near-black);
+    }
+    .menu-cta {
+      text-align: center;
+    }
+    .menu-cta a {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--red);
+      border-bottom: 1px solid var(--red);
+      padding-bottom: 2px;
+      transition: opacity 0.2s;
+    }
+    .menu-cta a:hover { opacity: 0.75; }
+
+    /* ══════════════════════════════
+       SPECIALITIES
+    ══════════════════════════════ */
+    #specialities { background: var(--white); }
+    .spec-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .spec-card {
+      border: 1.5px solid var(--red);
+      border-radius: 8px;
+      padding: 36px 28px;
+      position: relative;
+    }
+    .spec-card .spec-badge {
+      position: absolute;
+      top: -12px; right: 16px;
+      background: var(--gold);
+      color: var(--white);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+    .spec-card .spec-icon {
+      font-size: 2.2rem;
+      margin-bottom: 16px;
+    }
+    .spec-card h3 {
+      font-size: 1.3rem;
+      font-style: italic;
+      margin-bottom: 12px;
+      color: var(--near-black);
+    }
+    .spec-card p {
+      font-size: 0.9rem;
+      color: var(--grey);
+      line-height: 1.7;
+    }
+
+    /* ══════════════════════════════
+       PROMO BANNER
+    ══════════════════════════════ */
+    #promo {
+      background: var(--red);
+      padding: 72px 24px;
+      text-align: center;
+    }
+    #promo .promo-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-style: italic;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+    #promo .promo-desc {
+      color: rgba(255,255,255,0.88);
+      font-size: 1rem;
+      margin-bottom: 32px;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #promo .promo-sub {
+      color: rgba(255,255,255,0.65);
+      font-size: 0.85rem;
+      margin-top: 20px;
+    }
+
+    /* ══════════════════════════════
+       GALLERY
+    ══════════════════════════════ */
+    #gallery { background: #161616; }
+    #gallery .section-title { color: var(--white); }
+    #gallery .section-label { color: var(--red); }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .gallery-item {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      border-radius: 8px;
+      border: 1.5px solid transparent;
+      transition: border-color 0.25s;
+    }
+    .gallery-item:hover { border-color: var(--red); }
+    .gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.45s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.06); }
+
+    /* ══════════════════════════════
+       ABOUT
+    ══════════════════════════════ */
+    #about { background: var(--off-white); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .about-sub {
+      font-style: italic;
+      color: var(--grey);
+      margin-bottom: 20px;
+      font-size: 1rem;
+    }
+    .about-body {
+      font-size: 0.96rem;
+      color: var(--grey);
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+    .about-stats {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .about-stat {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--near-black);
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 6px 14px;
+    }
+    .about-stat i { color: var(--red); font-size: 0.8rem; }
+    .about-img img {
+      width: 100%;
+      border-radius: 12px;
+      border: 2px solid var(--red);
+      object-fit: cover;
+      max-height: 480px;
+    }
+
+    /* ══════════════════════════════
+       REVIEWS
+    ══════════════════════════════ */
+    #reviews { background: var(--white); }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .review-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 28px 24px;
+      transition: box-shadow 0.2s;
+    }
+    .review-card:hover {
+      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+    }
+    .review-stars {
+      color: var(--red);
+      font-size: 0.9rem;
+      margin-bottom: 14px;
+      letter-spacing: 2px;
+    }
+    .review-text {
+      font-size: 0.9rem;
+      color: var(--grey);
+      font-style: italic;
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+    .review-source {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--red);
+    }
+    .reviews-cta { text-align: center; }
+    .reviews-cta a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--grey);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 10px 20px;
+      transition: all 0.2s;
+    }
+    .reviews-cta a:hover { border-color: var(--red); color: var(--red); }
+
+    /* ══════════════════════════════
+       CONTACT & RESERVATIE
+    ══════════════════════════════ */
+    #contact {
+      background: #111111;
+      padding: 88px 24px;
+    }
+    #contact .section-label { color: var(--red); }
+    #contact .section-title { color: var(--white); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .contact-info { color: rgba(255,255,255,0.8); }
+    .contact-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+      font-size: 0.95rem;
+    }
+    .contact-detail i {
+      color: var(--red);
+      width: 18px;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+    .contact-detail a { color: rgba(255,255,255,0.8); transition: color 0.2s; }
+    .contact-detail a:hover { color: var(--red); }
+    .hours-table {
+      width: 100%;
+      margin-top: 8px;
+    }
+    .hours-table tr td {
+      padding: 4px 0;
+      font-size: 0.88rem;
+    }
+    .hours-table tr td:first-child {
+      color: rgba(255,255,255,0.5);
+      width: 80px;
+      font-weight: 500;
+    }
+    .hours-table tr.closed td { color: rgba(255,255,255,0.3); }
+    .hours-table tr.closed td:last-child { color: var(--red); }
+    .contact-features {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .contact-feature {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.55);
+    }
+    .contact-feature i { color: var(--gold); }
+    .map-wrap {
+      margin-top: 24px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    /* Form */
+    .contact-form h3 {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.5rem;
+      color: var(--white);
+      margin-bottom: 24px;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .form-group label {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 4px;
+      padding: 11px 14px;
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: rgba(255,255,255,0.25);
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--red);
+    }
+    .form-group select option { background: #222; }
+    .form-group textarea { resize: vertical; min-height: 90px; }
+    .form-success {
+      display: none;
+      background: rgba(39,174,96,0.15);
+      border: 1px solid rgba(39,174,96,0.3);
+      border-radius: 6px;
+      padding: 14px 18px;
+      color: #2ecc71;
+      font-size: 0.92rem;
+      margin-top: 12px;
+    }
+
+    /* ══════════════════════════════
+       FOOTER
+    ══════════════════════════════ */
+    #footer {
+      background: #111111;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 40px 24px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      align-items: center;
+      gap: 24px;
+    }
+    .footer-logo .fl-sushi {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.3rem;
+      color: var(--red);
+      font-weight: 700;
+    }
+    .footer-logo .fl-leuven {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.3rem;
+      color: var(--white);
+    }
+    .footer-logo .fl-jp {
+      font-size: 0.8rem;
+      color: var(--grey);
+      margin-left: 6px;
+    }
+    .footer-logo p {
+      font-size: 0.8rem;
+      color: var(--grey);
+      margin-top: 4px;
+    }
+    .footer-center {
+      text-align: center;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.25);
+      line-height: 1.8;
+    }
+    .footer-right {
+      text-align: right;
+    }
+    .footer-right a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: var(--red);
+      transition: opacity 0.2s;
+      margin-bottom: 6px;
+    }
+    .footer-right a:hover { opacity: 0.75; }
+    .footer-right .fb-link { display: flex; justify-content: flex-end; }
+
+    /* ══════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════ */
+    @media (max-width: 1024px) {
+      .menu-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links, .nav-right .btn { display: none; }
+      .hamburger { display: flex; }
+
+      #hero { flex-direction: column; margin-top: 64px; min-height: auto; }
+      .hero-right {
+        flex: none;
+        height: 55vw;
+        width: 100%;
+        order: -1;
+      }
+      .hero-left {
+        flex: none;
+        padding: 48px 24px 56px;
+      }
+      .hero-left-inner { max-width: 100%; }
+
+      .menu-grid { grid-template-columns: repeat(2, 1fr); }
+      .spec-grid { grid-template-columns: 1fr; gap: 40px; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .about-grid { grid-template-columns: 1fr; gap: 36px; }
+      .reviews-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+      .footer-inner { grid-template-columns: 1fr; text-align: center; gap: 20px; }
+      .footer-right { text-align: center; }
+      .footer-right .fb-link { justify-content: center; }
+    }
+
+    @media (max-width: 480px) {
+      section { padding: 56px 16px; }
+      .menu-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .hero-ctas { flex-direction: column; }
+      .hero-ctas .btn { text-align: center; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════
+     NAVBAR
+══════════════════════════════ -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <span class="logo-sushi">Sushi</span>
+      <span class="logo-leuven">Leuven</span>
+      <span class="logo-jp">寿司</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#menu" data-nl="Menu" data-en="Menu">Menu</a></li>
+      <li><a href="#about" data-nl="Over ons" data-en="About">Over ons</a></li>
+      <li><a href="#contact" data-nl="Reservatie" data-en="Reservation">Reservatie</a></li>
+      <li><a href="#contact" data-nl="Contact" data-en="Contact">Contact</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <a href="https://sushileuven.azurewebsites.net/Menu" target="_blank" rel="noopener" class="btn btn-red" data-nl="Bestel online" data-en="Order online">Bestel online</a>
+      <div class="lang-toggle" id="langToggle">
+        <span id="langNL" class="active">NL</span>
+        <span class="sep">|</span>
+        <span id="langEN">EN</span>
+      </div>
+    </div>
+
+    <div class="hamburger" id="hamburger" aria-label="Menu" role="button" tabindex="0">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#menu" data-nl="Menu" data-en="Menu">Menu</a>
+  <a href="#about" data-nl="Over ons" data-en="About">Over ons</a>
+  <a href="#contact" data-nl="Reservatie" data-en="Reservation">Reservatie</a>
+  <a href="#contact" data-nl="Contact" data-en="Contact">Contact</a>
+  <a href="https://sushileuven.azurewebsites.net/Menu" target="_blank" rel="noopener" class="btn btn-red" style="text-align:center;" data-nl="Bestel online" data-en="Order online">Bestel online</a>
+</div>
+
+<!-- ══════════════════════════════
+     HERO
+══════════════════════════════ -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-left-inner">
+      <div class="hero-jp">🍣 <span class="jp-char">寿司</span></div>
+
+      <h1 class="hero-h1">
+        <span class="red">Sushi</span>
+        <span class="dark">Leuven</span>
+      </h1>
+
+      <p class="hero-sub">
+        <span data-nl="Moderne &amp; traditionele Japanse keuken<br>op de Tiensestraat — vers bereid à la minute"
+              data-en="Modern &amp; traditional Japanese cuisine<br>on Tiensestraat — freshly prepared à la minute">
+          Moderne &amp; traditionele Japanse keuken<br>op de Tiensestraat — vers bereid à la minute
+        </span>
+      </p>
+
+      <div class="hero-promo">
+        🎓 <span data-nl="10% korting met code" data-en="10% discount with code">10% korting met code</span>&nbsp;<span class="promo-code">SUSHI10</span>&nbsp;<span data-nl="op onze website!" data-en="on our website!">op onze website!</span>
+      </div>
+
+      <div class="hero-ctas">
+        <a href="https://sushileuven.azurewebsites.net/Menu" target="_blank" rel="noopener" class="btn btn-red" data-nl="Bestel online" data-en="Order online">Bestel online</a>
+        <a href="#menu" class="btn btn-outline" data-nl="Bekijk menu" data-en="View menu">Bekijk menu</a>
+      </div>
+
+      <div class="hero-status">
+        <span class="pulse-dot"></span>
+        <span data-nl="Di gesloten · overige dagen open" data-en="Closed Tue · open other days">Di gesloten · overige dagen open</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right"></div>
+</section>
+
+<!-- ══════════════════════════════
+     MENU CATEGORIES
+══════════════════════════════ -->
+<section id="menu">
+  <div class="section-inner">
+    <p class="section-label fade-up" data-nl="Japanse keuken" data-en="Japanese cuisine">Japanse keuken</p>
+    <h2 class="section-title fade-up" data-nl="Ons Menu" data-en="Our Menu">Ons Menu</h2>
+
+    <div class="menu-grid">
+      <div class="menu-card fade-up"><span class="cat-emoji">🍣</span><span class="cat-name">Nigiri</span></div>
+      <div class="menu-card fade-up"><span class="cat-emoji">🐟</span><span class="cat-name">Sashimi</span></div>
+      <div class="menu-card fade-up"><span class="cat-emoji">🌯</span><span class="cat-name">Maki</span></div>
+      <div class="menu-card fade-up"><span class="cat-emoji">🌀</span><span class="cat-name">Special Rolls</span></div>
+      <div class="menu-card fade-up"><span class="cat-emoji">🥟</span><span class="cat-name">Gyoza</span></div>
+      <div class="menu-card fade-up"><span class="cat-emoji">🫕</span><span class="cat-name">Dimsum</span></div>
+      <div class="menu-card fade-up"><span class="cat-emoji">🍜</span><span class="cat-name">Wok</span></div>
+      <div class="menu-card fade-up"><span class="cat-emoji">🔥</span><span class="cat-name">Teri Yaki Grill</span></div>
+      <div class="menu-card fade-up"><span class="cat-emoji">🥗</span><span class="cat-name" data-nl="Salades" data-en="Salads">Salades</span></div>
+      <div class="menu-card fade-up"><span class="cat-emoji">🍲</span><span class="cat-name" data-nl="Soep" data-en="Soup">Soep</span></div>
+      <div class="menu-card fade-up"><span class="cat-emoji">⛵</span><span class="cat-name">Boat Menu</span></div>
+      <div class="menu-card fade-up"><span class="cat-emoji">🌟</span><span class="cat-name">PROMO</span></div>
+    </div>
+
+    <div class="menu-cta fade-up">
+      <a href="https://sushileuven.azurewebsites.net/Menu" target="_blank" rel="noopener">
+        <span data-nl="Bestel online &amp; krijg 10% korting →" data-en="Order online &amp; get 10% discount →">Bestel online &amp; krijg 10% korting →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     SPECIALITIES
+══════════════════════════════ -->
+<section id="specialities">
+  <div class="section-inner">
+    <p class="section-label fade-up" data-nl="Chef's keuze" data-en="Chef's choice">Chef's keuze</p>
+    <h2 class="section-title fade-up" data-nl="Onze Specialiteiten" data-en="Our Specialities">Onze Specialiteiten</h2>
+
+    <div class="spec-grid">
+      <div class="spec-card fade-up">
+        <span class="spec-badge">BESTSELLER</span>
+        <div class="spec-icon">⛵</div>
+        <h3 data-nl="Boat Menu" data-en="Boat Menu">Boat Menu</h3>
+        <p data-nl="Onze beroemde sushi boot — perfect voor groepen. Een kleurrijke selectie van de beste rollen en nigiri's."
+           data-en="Our famous sushi boat — perfect for groups. A colourful selection of the best rolls and nigiri's.">
+          Onze beroemde sushi boot — perfect voor groepen. Een kleurrijke selectie van de beste rollen en nigiri's.
+        </p>
+      </div>
+
+      <div class="spec-card fade-up">
+        <div class="spec-icon">🌀</div>
+        <h3 data-nl="Special Rolls" data-en="Special Rolls">Special Rolls</h3>
+        <p data-nl="Creatieve combinaties van verse vis, avocado, komkommer en huissauzen. Onze chef's meesterwerken."
+           data-en="Creative combinations of fresh fish, avocado, cucumber and house sauces. Our chef's masterworks.">
+          Creatieve combinaties van verse vis, avocado, komkommer en huissauzen. Onze chef's meesterwerken.
+        </p>
+      </div>
+
+      <div class="spec-card fade-up">
+        <div class="spec-icon">🎓</div>
+        <h3 data-nl="Studentenpromotie" data-en="Student Promotion">Studentenpromotie</h3>
+        <p data-nl="25 stuks sushi voor slechts €15 — super lekker en betaalbaar! Of bestel online met code SUSHI10 voor 10% korting."
+           data-en="25 pieces of sushi for only €15 — super tasty and affordable! Or order online with code SUSHI10 for 10% off.">
+          25 stuks sushi voor slechts €15 — super lekker en betaalbaar! Of bestel online met code SUSHI10 voor 10% korting.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     PROMO BANNER
+══════════════════════════════ -->
+<section id="promo">
+  <div class="section-inner">
+    <p class="promo-title fade-up" data-nl="🎁 Online Bestellen = 10% Korting!" data-en="🎁 Order Online = 10% Discount!">🎁 Online Bestellen = 10% Korting!</p>
+    <p class="promo-desc fade-up">
+      <span data-nl="Bestel rechtstreeks op onze website en gebruik kortingscode SUSHI10 voor 10% korting op je bestelling."
+            data-en="Order directly on our website and use discount code SUSHI10 for 10% off your order.">
+        Bestel rechtstreeks op onze website en gebruik kortingscode SUSHI10 voor 10% korting op je bestelling.
+      </span>
+    </p>
+    <a href="https://sushileuven.azurewebsites.net/Menu" target="_blank" rel="noopener" class="btn btn-white fade-up"
+       data-nl="Bestel nu met korting →" data-en="Order now with discount →">Bestel nu met korting →</a>
+    <p class="promo-sub fade-up">
+      <span data-nl="Afhaling &amp; levering beschikbaar" data-en="Takeaway &amp; delivery available">Afhaling &amp; levering beschikbaar</span>
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     GALLERY
+══════════════════════════════ -->
+<section id="gallery">
+  <div class="section-inner">
+    <p class="section-label fade-up" data-nl="Foto's" data-en="Photos">Foto's</p>
+    <h2 class="section-title fade-up" data-nl="Onze Sushi" data-en="Our Sushi">Onze Sushi</h2>
+
+    <div class="gallery-grid">
+      <div class="gallery-item fade-up">
+        <img src="images/food-1.png" alt="Sushi Leuven" loading="lazy" />
+      </div>
+      <div class="gallery-item fade-up">
+        <img src="https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=600" alt="Sushi rolls" loading="lazy" />
+      </div>
+      <div class="gallery-item fade-up">
+        <img src="https://images.unsplash.com/photo-1562802378-063ec186a863?w=600" alt="Japanese cuisine" loading="lazy" />
+      </div>
+      <div class="gallery-item fade-up">
+        <img src="https://images.unsplash.com/photo-1611143669185-af224c5e3252?w=600" alt="Nigiri sushi" loading="lazy" />
+      </div>
+      <div class="gallery-item fade-up">
+        <img src="https://images.unsplash.com/photo-1559410545-0bdcd187e0a6?w=600" alt="Sashimi" loading="lazy" />
+      </div>
+      <div class="gallery-item fade-up">
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600" alt="Japanese food" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     ABOUT
+══════════════════════════════ -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-text">
+        <p class="section-label fade-up" data-nl="Over ons" data-en="About us">Over ons</p>
+        <h2 class="section-title fade-up" style="margin-bottom:16px;"
+            data-nl="Vers bereid. Elke dag. À la minute."
+            data-en="Freshly prepared. Every day. À la minute.">
+          Vers bereid. Elke dag. À la minute.
+        </h2>
+        <p class="about-sub fade-up"
+           data-nl="Moderne &amp; traditionele Japanse keuken in Leuven."
+           data-en="Modern &amp; traditional Japanese cuisine in Leuven.">
+          Moderne &amp; traditionele Japanse keuken in Leuven.
+        </p>
+        <p class="about-body fade-up"
+           data-nl="Sushi Leuven op de Tiensestraat 28 is jouw vaste adres voor verse, authentieke sushi in Leuven. Of je nu komt voor een lunch, een romantisch diner of een feest met friends via de boot — we hebben voor ieder wat wils. Dine-in, afhaling of levering. Bestel online en krijg 10% korting!"
+           data-en="Sushi Leuven at Tiensestraat 28 is your go-to address for fresh, authentic sushi in Leuven. Whether you come for lunch, a romantic dinner or a celebration with the boat menu — we have something for everyone. Dine-in, takeaway or delivery. Order online and get 10% off!">
+          Sushi Leuven op de Tiensestraat 28 is jouw vaste adres voor verse, authentieke sushi in Leuven. Of je nu komt voor een lunch, een romantisch diner of een feest met friends via de boot — we hebben voor ieder wat wils. Dine-in, afhaling of levering. Bestel online en krijg 10% korting!
+        </p>
+        <div class="about-stats fade-up">
+          <span class="about-stat"><i class="fa-brands fa-facebook-f"></i> <span data-nl="94% Facebook" data-en="94% Facebook">94% Facebook</span></span>
+          <span class="about-stat"><i class="fa-solid fa-leaf"></i> <span data-nl="Glutenvrij opties" data-en="Gluten-free options">Glutenvrij opties</span></span>
+          <span class="about-stat"><i class="fa-solid fa-graduation-cap"></i> <span data-nl="Student promo" data-en="Student promo">Student promo</span></span>
+        </div>
+      </div>
+      <div class="about-img fade-up">
+        <img src="images/food-1.png" alt="Sushi Leuven" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     REVIEWS
+══════════════════════════════ -->
+<section id="reviews">
+  <div class="section-inner">
+    <p class="section-label fade-up" data-nl="Gastrecensies" data-en="Guest reviews">Gastrecensies</p>
+    <h2 class="section-title fade-up" data-nl="Wat onze gasten zeggen" data-en="What our guests say">Wat onze gasten zeggen</h2>
+
+    <div class="reviews-grid">
+      <div class="review-card fade-up">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"For 3 years my regular sushi restaurant in Leuven. We always come here to celebrate our anniversary. Friendly service, cozy atmosphere and a great student promotion!!!"</p>
+        <span class="review-source">TripAdvisor</span>
+      </div>
+      <div class="review-card fade-up">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Fresh, delicious, and authentic sushi in the heart of Leuven! Chef truly knows his craft, with creative rolls and traditional favorites executed to perfection."</p>
+        <span class="review-source">TripAdvisor</span>
+      </div>
+      <div class="review-card fade-up">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Nice sushi, adapted gluten-free and very friendly service. We had a pleasant experience, we will definitely be back!"</p>
+        <span class="review-source">TripAdvisor</span>
+      </div>
+    </div>
+
+    <div class="reviews-cta fade-up">
+      <a href="https://www.tripadvisor.com/Restaurant_Review-Sushi_Leuven" target="_blank" rel="noopener">
+        <i class="fa-solid fa-star"></i>
+        <span data-nl="Alle reviews op TripAdvisor" data-en="All reviews on TripAdvisor">Alle reviews op TripAdvisor</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     CONTACT & RESERVATIE
+══════════════════════════════ -->
+<section id="contact">
+  <div class="section-inner">
+    <p class="section-label fade-up" data-nl="Kom langs" data-en="Visit us">Kom langs</p>
+    <h2 class="section-title fade-up" data-nl="Reservatie &amp; Contact" data-en="Reservation &amp; Contact">Reservatie &amp; Contact</h2>
+
+    <div class="contact-grid">
+      <!-- Info + Map -->
+      <div class="contact-info">
+        <div class="contact-detail fade-up">
+          <i class="fa-solid fa-location-dot"></i>
+          <span>Tiensestraat 28, 3000 Leuven</span>
+        </div>
+        <div class="contact-detail fade-up">
+          <i class="fa-solid fa-phone"></i>
+          <a href="tel:+3216223564">+32 16 22 35 64</a>
+        </div>
+        <div class="contact-detail fade-up">
+          <i class="fa-solid fa-envelope"></i>
+          <a href="mailto:sushileuven@gmail.com">sushileuven@gmail.com</a>
+        </div>
+        <div class="contact-detail fade-up">
+          <i class="fa-solid fa-globe"></i>
+          <a href="https://sushileuven.be" target="_blank" rel="noopener">sushileuven.be</a>
+        </div>
+
+        <div class="contact-detail fade-up" style="align-items:flex-start; margin-top:8px;">
+          <i class="fa-solid fa-clock"></i>
+          <table class="hours-table">
+            <tbody id="hoursTable">
+              <tr><td data-nl="Ma" data-en="Mon">Ma</td><td>12:00–15:00 &amp; 17:00–21:30</td></tr>
+              <tr class="closed"><td data-nl="Di" data-en="Tue">Di</td><td data-nl="Gesloten" data-en="Closed">Gesloten</td></tr>
+              <tr><td data-nl="Wo" data-en="Wed">Wo</td><td>12:00–15:00 &amp; 17:00–21:30</td></tr>
+              <tr><td data-nl="Do" data-en="Thu">Do</td><td>12:00–15:00 &amp; 17:00–21:30</td></tr>
+              <tr><td data-nl="Vr" data-en="Fri">Vr</td><td>12:00–15:00 &amp; 17:00–21:30</td></tr>
+              <tr><td data-nl="Za" data-en="Sat">Za</td><td>12:00–15:00 &amp; 17:00–21:30</td></tr>
+              <tr><td data-nl="Zo" data-en="Sun">Zo</td><td>12:00–15:00 &amp; 17:00–21:30</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="contact-features fade-up">
+          <span class="contact-feature"><i class="fa-solid fa-wheat-awn-circle-exclamation"></i> <span data-nl="Glutenvrij" data-en="Gluten-free">Glutenvrij</span></span>
+          <span class="contact-feature"><i class="fa-solid fa-seedling"></i> <span data-nl="Vegetarisch" data-en="Vegetarian">Vegetarisch</span></span>
+          <span class="contact-feature"><i class="fa-solid fa-umbrella-beach"></i> <span data-nl="Buiten zitten" data-en="Outdoor seating">Buiten zitten</span></span>
+        </div>
+
+        <div class="map-wrap fade-up" style="margin-top:24px;">
+          <iframe
+            src="https://www.google.com/maps?q=Tiensestraat+28,+3000+Leuven&output=embed"
+            width="100%" height="280"
+            style="border:0;border-radius:8px;display:block;"
+            allowfullscreen loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+
+      <!-- Reservation Form -->
+      <div class="contact-form fade-up">
+        <h3 data-nl="Tafel reserveren" data-en="Reserve a table">Tafel reserveren</h3>
+
+        <form id="reservationForm" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label data-nl="Naam" data-en="Name">Naam</label>
+              <input type="text" id="fname" data-placeholder-nl="Uw naam" data-placeholder-en="Your name" placeholder="Uw naam" required />
+            </div>
+            <div class="form-group">
+              <label data-nl="Email" data-en="Email">Email</label>
+              <input type="email" id="femail" data-placeholder-nl="uw@email.com" data-placeholder-en="your@email.com" placeholder="uw@email.com" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label data-nl="Datum" data-en="Date">Datum</label>
+              <input type="date" id="fdate" required />
+            </div>
+            <div class="form-group">
+              <label data-nl="Tijd" data-en="Time">Tijd</label>
+              <select id="ftime" required>
+                <option value="">— kies —</option>
+                <option>12:00</option><option>12:30</option>
+                <option>13:00</option><option>13:30</option>
+                <option>14:00</option><option>14:30</option>
+                <option>17:00</option><option>17:30</option>
+                <option>18:00</option><option>18:30</option>
+                <option>19:00</option><option>19:30</option>
+                <option>20:00</option><option>20:30</option>
+                <option>21:00</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label data-nl="Aantal personen" data-en="Guests">Aantal personen</label>
+            <select id="fguests" required>
+              <option value="">— kies —</option>
+              <option>1</option><option>2</option><option>3</option><option>4</option>
+              <option>5</option><option>6</option><option>7</option><option>8+</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label data-nl="Opmerking" data-en="Notes">Opmerking</label>
+            <textarea id="fnotes" data-placeholder-nl="Speciale wensen, allergieën..." data-placeholder-en="Special requests, allergies..." placeholder="Speciale wensen, allergieën..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-red" style="width:100%;padding:14px;"
+                  data-nl="Reserveer →" data-en="Reserve →">Reserveer →</button>
+        </form>
+
+        <div class="form-success" id="formSuccess">
+          <span data-nl="Bedankt! We bevestigen uw reservatie zo snel mogelijk."
+                data-en="Thank you! We'll confirm your reservation soon.">
+            Bedankt! We bevestigen uw reservatie zo snel mogelijk.
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     FOOTER
+══════════════════════════════ -->
+<footer id="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <div>
+        <span class="fl-sushi">Sushi</span>
+        <span class="fl-leuven"> Leuven</span> 🍣
+        <span class="fl-jp">寿司</span>
+      </div>
+      <p data-nl="Tiensestraat 28 · 3000 Leuven" data-en="Tiensestraat 28 · 3000 Leuven">Tiensestraat 28 · 3000 Leuven</p>
+    </div>
+
+    <div class="footer-center">
+      <p>© 2026 · sushileuven.be</p>
+      <p><span data-nl="Di gesloten" data-en="Closed Tue">Di gesloten</span></p>
+      <p style="margin-top:6px;font-size:0.7rem;">BTW: BE0644845805</p>
+    </div>
+
+    <div class="footer-right">
+      <div class="fb-link">
+        <a href="https://facebook.com/sushileuven.be" target="_blank" rel="noopener">
+          <i class="fa-brands fa-facebook-f"></i> facebook.com/sushileuven.be
+        </a>
+      </div>
+      <div style="margin-top:6px;">
+        <a href="https://sushileuven.be" target="_blank" rel="noopener">
+          <i class="fa-solid fa-globe"></i> sushileuven.be
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════
+     JAVASCRIPT
+══════════════════════════════ -->
+<script>
+  /* ── Language system ── */
+  const translations = {
+    nl: {},
+    en: {}
+  };
+
+  let currentLang = 'nl';
+
+  function setLang(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+
+    // Update all data-nl / data-en text nodes
+    document.querySelectorAll('[data-nl]').forEach(el => {
+      const val = el.getAttribute('data-' + lang);
+      if (val !== null) {
+        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+          el.placeholder = val;
+        } else {
+          el.innerHTML = val;
+        }
+      }
+    });
+
+    // Update placeholder inputs with data-placeholder-nl/en
+    document.querySelectorAll('[data-placeholder-' + lang + ']').forEach(el => {
+      el.placeholder = el.getAttribute('data-placeholder-' + lang);
+    });
+
+    // Toggle indicators
+    document.getElementById('langNL').classList.toggle('active', lang === 'nl');
+    document.getElementById('langEN').classList.toggle('active', lang === 'en');
+  }
+
+  document.getElementById('langToggle').addEventListener('click', (e) => {
+    const target = e.target.closest('#langNL, #langEN');
+    if (!target) return;
+    setLang(target.id === 'langNL' ? 'nl' : 'en');
+  });
+
+  /* ── Navbar scroll ── */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+
+  /* ── Hamburger ── */
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+  });
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+  });
+
+  /* ── Smooth scroll for anchor links ── */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  /* ── IntersectionObserver fade-up ── */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  /* ── Reservation form ── */
+  const form = document.getElementById('reservationForm');
+  const formSuccess = document.getElementById('formSuccess');
+
+  // Set min date to today
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('fdate').setAttribute('min', today);
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('fname').value.trim();
+    const email = document.getElementById('femail').value.trim();
+    const date = document.getElementById('fdate').value;
+    const time = document.getElementById('ftime').value;
+    const guests = document.getElementById('fguests').value;
+
+    if (!name || !email || !date || !time || !guests) return;
+
+    // Simulate submit
+    form.style.display = 'none';
+    formSuccess.style.display = 'block';
+  });
+
+  /* ── Initialize ── */
+  setLang('nl');
+</script>
+
+</body>
+</html>
